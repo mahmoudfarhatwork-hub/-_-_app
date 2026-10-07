@@ -1,0 +1,13 @@
+[
+  {
+    "id": "adhkar-subhanallah-wabihamdih-100",
+    "text_ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+    "category": "morning-evening",
+    "repeat": 100,
+    "sources": [
+      { "type": "hadith", "ref": "صحيح مسلم 2692", "grade": "sahih" }
+    ],
+    "editor_note": "مسودة للتجربة. طابق النص والرقم والفضل بمصدر مرخّص قبل الاعتماد، ولا تضف فضلًا غير وارد.",
+    "review_status": "draft"
+  }
+]

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dhikr.schema.json",
+  "title": "Dhikr item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "text_ar", "category", "repeat", "sources", "review_status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "text_ar": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": [
+        "morning",
+        "evening",
+        "morning-evening",
+        "sleep",
+        "wakeup",
+        "after-prayer",
+        "wudu",
+        "food",
+        "travel",
+        "home",
+        "other"
+      ]
+    },
+    "repeat": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "عدد التكرار الوارد في النص"
+    },
+    "virtue_ar": {
+      "type": "string",
+      "description": "الفضل كما ورد في النص، بلا زيادة"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "ref"],
+        "properties": {
+          "type": { "type": "string", "enum": ["quran", "hadith"] },
+          "ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "مثل: البقرة 255 أو صحيح مسلم 2692"
+          },
+          "grade": {
+            "type": "string",
+            "enum": ["sahih", "hasan", "daif", "mawdu"]
+          }
+        },
+        "if": {
+          "properties": { "type": { "const": "hadith" } },
+          "required": ["type"]
+        },
+        "then": { "required": ["grade"] }
+      }
+    },
+    "editor_note": { "type": "string" },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "reviewed", "published"]
+    },
+    "reviewer": { "type": "string", "minLength": 1 },
+    "reviewed_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "review_status": { "enum": ["reviewed", "published"] } },
+        "required": ["review_status"]
+      },
+      "then": {
+        "required": ["reviewer", "reviewed_at"]
+      }
+    }
+  ]
+}
